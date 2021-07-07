@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="es">
+
+  <head>
+  
+    <title>
+
+      {% block title %} {% endblock %}
+    
+    </title>
+    
+    <!--boostrap css-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="icon" href="/media/ICONOJGUARETE.ico">
+
+    <!--estilos-->
+    <link href="{% static 'AppKAA/estilos.css' %}" rel="stylesheet">
+    <!--javascrip-->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="{% static 'AppKAA/script.js' %}"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    
+  </head>
+
+    <body>
+      <header class="encabezado">
+        <nav class="navbar navbar-expand-lg navbar-light bg-#c9ddd1">
+          <div class="container">
+            <a class="navbar-brand" href="/"><img src="/media/LOGOJAGUARETE.png" alt="JAGUARETE KAA" style="width: 100%"></a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <div class="col-xl-4 col-md-6 col-sm-4-offset-4">
+                    <div class="d-grid gap-2 d-sm-flex col-sm-6 mx-auto justify-content-center m-2">
+                        {% if user.is_authenticated %}
+                            <a class="navbar-brand" href="#">{{ user.username }}</a>
+                            <a href="{% url 'logout' %}" class="btn btn-success" role="button">Salir</a>
+                            {% if perms.AppKAA.add_producto %}
+                                <a href="{% url 'carrito' %}" class="btn disabled" role="button"></a>
+                            {% else %}
+                                <a href="{% url 'carrito' %}" class="btn btn-success" role="button">Carrito</a>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-success" role="button">Login</a>
+                            <a href="{% url 'registro' %}" class="btn btn-success" role="button">Registro</a>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+              </ul>
+            </div>  
+          </div>
+        </nav>  
+      
+
+      <!-----Menu----->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        
+        <div class="container">
+          <a class="navbar-brand">Menú</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Categorías</a>
+                <ul class="dropdown-menu">
+                  
+                  <li><a class="dropdown-item" href="{% url 'home' %}">Mate</a></li>
+                  <li><a class="dropdown-item" href="{% url 'home' %}">Té</a></li>
+                  
+                </ul>
+              </li>
+
+
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'acerca_de' %}">Acerca de</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="mailto:example@email.com">Contacto</a>
+              </li>
+              {% if perms.AppKAA.add_producto %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'agregar_producto' %}">Nuevo producto</a>
+                </li>
+              {% endif %}
+            </ul>
+
+            <form class="d-flex" method="POST" action="{% url 'resultado' %}">
+              {% csrf_token %}
+              <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search" name="buscado">
+              <button class="btn btn-success" type="submit">Buscar</button>
+            </form>
+          </div>
+        </div>
+      </nav>  
+
+      {% block content %}
+
+      {% endblock %}
+
+  
+      <footer>
+        <div class="container p-3 text-white text-center">
+          <p>JAGUARETE KAA S.A. &copy; 2021 - Desarrollado por Fernanda Torres</p>
+        </div>
+      </footer>
+
+
+
+      <!--boostrap js-->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    </body>
+
+    
+</html>

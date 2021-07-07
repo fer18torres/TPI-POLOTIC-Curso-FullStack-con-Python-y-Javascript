@@ -1,0 +1,34 @@
+{% extends "AppKAA/layout.html" %}
+    
+{% block title %}JAGUARETE KAA{% endblock %}
+
+
+{% block content %}
+
+<div class="container p-5">
+    <h3 class="mb-1">RESULTADO DE LA BÚSQUEDA</h3>
+    {% if buscado %}
+    {% for producto in producto %}
+        <ul class="list-group-item">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">{{producto.nombre}}</div>
+                    {{producto.descripcion}}
+                </div>
+                <a href="{% url 'ver_producto' producto.id %}" class="btn btn-success margin-5px">Ver más</a>
+            </li>
+        </ul>
+            
+    {% endfor %}
+    {% endif %}
+   
+
+</div>
+    
+
+
+
+{% endblock %}
+
+
+

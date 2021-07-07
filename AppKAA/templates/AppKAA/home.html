@@ -1,0 +1,52 @@
+{% extends "AppKAA/layout.html" %}
+    
+{% block title %}JAGUARETE KAA{% endblock %}
+
+
+{% block content %}
+
+<div class="container p-5">
+    <div class="row">
+        {% for producto in productos %}
+            <div class="col mb-5">
+                <div class="card" style="margin:10px 10px">
+                    <img src="{{producto.imagen.url}}" class="card-img-top" alt="{{producto.nombre}}">
+        
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{producto.nombre}}
+                        </h5>
+                        <p class="card-text">{{producto.descripcion}}</p>
+                        <p class="card-text">&nbsp;${{producto.precio}}</p>
+                        <a href="{% url 'ver_producto' producto.id %}" class="btn btn-success">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            
+    
+    {% endfor %}
+
+    <h3 class="mb-1">Mas Productos</h3>
+    
+    {% for producto in secundarios %}
+        <ul class="list-group-item">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">{{producto.nombre}}</div>
+                    {{producto.descripcion}}
+                </div>
+                <a href="{% url 'ver_producto' producto.id %}" class="btn btn-success margin-5px">Ver más</a>
+            </li>
+        </ul>
+    {% endfor %}
+
+    </div>
+
+</div>
+
+
+
+{% endblock %}
+
+
+

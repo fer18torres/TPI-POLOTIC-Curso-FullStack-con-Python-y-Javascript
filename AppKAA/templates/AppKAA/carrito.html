@@ -1,0 +1,58 @@
+{% extends 'AppKAA/layout.html' %}
+
+{% load static %}
+{% block title%}Carrito de compras{% endblock %}
+{% block content %}
+
+<div class="container p-5">
+  <div class="row mt-2">
+    <div class="col-sm-8 offset-2 text-center">
+      <h2>CARRITO</h2>
+      <h3>{{ cart.usuario }}</h3>
+    </div>
+  </div><br>
+  
+  <table class="table bg-light">
+    <thead>
+      <tr>
+        <th scope="col">Producto</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Precio</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in cart_prod.all %}
+      <tr>
+        <th scope="row">{{ c.nombre }}</th>
+        <td>{{ c.descripcion }}</td>
+        <td>${{ c.precio }}</td>
+        <td></td>
+      </tr>
+      {% empty %}
+        <h3>El carrito está vacio</h3>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>TOTAL: ${{ cart.total }}</td>
+        <td class="d-flex justify-content-center">
+          <a href="{% url 'limpiar_carrito' %}">
+            <button type="button" class="btn btn-success btn-sm m-1">
+              <span class="material-icons">Vaciar</span>
+            </button>
+          </a>
+          <button type="button" class="btn btn-success btn-sm m-1">
+            <span class="material-icons">Comprar</span>
+          </button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+</div>
+
+
+{% endblock %}
